@@ -28,7 +28,7 @@ const staticSchemas = (): Plugin => ({
   },
 })
 
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/claudeschemas/' : '/',
+export default defineConfig(({ command, isPreview }) => ({
+  base: command === 'build' || isPreview ? '/claudeschemas/' : '/',
   plugins: [staticSchemas()],
 }))

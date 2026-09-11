@@ -8,7 +8,6 @@ import { requireElement } from './dom'
 import { CodeMirrorEditor } from './editor/CodeMirrorEditor'
 import { KindSelector } from './kinds/KindSelector'
 import { SchemaLinkView } from './kinds/SchemaLinkView'
-import { placeholderDocumentKind } from './placeholderDocumentKind'
 import { createDocumentStore } from './state/createDocumentStore'
 import { resolveKindText } from './state/resolveKindText'
 import { ValidationController } from './state/ValidationController'
@@ -18,7 +17,6 @@ const emptyRegistryMessage =
 
 const start = (): void => {
   const registry = createDefaultRegistry()
-  registry.register(placeholderDocumentKind)
 
   const kinds = registry.list()
   const documentTitle = requireElement('document-title', HTMLHeadingElement)
