@@ -1,0 +1,4 @@
+{
+  "hint": "The description never says when Claude should reach for the skill.",
+  "ruleIds": ["skill/description-when-to-use"]
+}

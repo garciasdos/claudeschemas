@@ -30,7 +30,7 @@ describe('SkillDocumentKind', () => {
       [
         '---',
         'name: Demo',
-        'description: Does a thing.',
+        'description: Does a thing when asked to.',
         'effort: ultra',
         '---',
         '',
@@ -46,13 +46,27 @@ describe('SkillDocumentKind', () => {
     ])
   })
 
+  it('appends improvement hints after the problems on the same line', () => {
+    const diagnostics = kind.validate(
+      ['---', 'name: Demo-Skill', 'description: Sorts imports.', '---', '', 'Body.', ''].join('\n'),
+    )
+    expect(diagnostics.map((diagnostic) => [diagnostic.severity, diagnostic.ruleId])).toEqual([
+      ['error', 'skill/name-format'],
+      ['hint', 'skill/name-says-skill'],
+      ['hint', 'skill/description-brevity'],
+      ['hint', 'skill/description-when-to-use'],
+    ])
+  })
+
   it('is deterministic', () => {
     const text = '---\nname: Demo\n---\n\n${CLAUDE_NOPE}\n'
     expect(kind.validate(text)).toEqual(kind.validate(text))
   })
 
   it('marks schema diagnostics with the schema source', () => {
-    const diagnostics = kind.validate('---\nname: demo\ndescription: x\nunknown: 1\n---\n\nBody.\n')
+    const diagnostics = kind.validate(
+      '---\nname: demo\ndescription: Does a thing when asked to.\nunknown: 1\n---\n\nBody.\n',
+    )
     expect(diagnostics[0]?.source).toBe('schema')
     expect(diagnostics[0]?.ruleId).toBe('schema/unknown-field')
     expect(diagnostics[0]?.range.start.line).toBe(4)

@@ -1,0 +1,4 @@
+{
+  "hint": "An argument-hint is set on a skill that never appears in the / menu.",
+  "ruleIds": ["skill/argument-hint-hidden"]
+}

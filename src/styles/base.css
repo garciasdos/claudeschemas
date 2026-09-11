@@ -29,6 +29,7 @@
   --error: #b3261e;
   --warning: #9a5b06;
   --info: #0f6b72;
+  --hint: #5d58a6;
   --success: #1d6b45;
 
   --gutter-bg: #f6f6f3;
@@ -63,6 +64,7 @@
     --error: #f08279;
     --warning: #e0a244;
     --info: #5cb3b8;
+    --hint: #a7a2e3;
     --success: #6fbf92;
 
     --gutter-bg: #1d1d1c;
@@ -103,6 +105,7 @@ body {
 
 h1,
 h2,
+h3,
 p,
 ul {
   margin: 0;

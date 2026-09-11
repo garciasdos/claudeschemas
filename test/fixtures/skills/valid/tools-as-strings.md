@@ -1,6 +1,6 @@
 ---
 name: rebase-branch
-description: Rebases a working branch onto a target branch and resolves the conflicts it can resolve on its own.
+description: Rebases a working branch onto a target branch and resolves the conflicts it can resolve on its own. Use when a branch has fallen behind or a rebase is requested.
 argument-hint: '[branch] [onto]'
 arguments: branch onto
 allowed-tools: Read, Edit, Bash(git status:*), Bash(git rebase:*)

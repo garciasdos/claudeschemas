@@ -21,13 +21,19 @@ describe('normalizeDiagnostics', () => {
     ])
   })
 
-  it('puts errors before warnings before info on the same position', () => {
+  it('puts errors before warnings before info before hints on the same position', () => {
     const sorted = normalizeDiagnostics([
+      at(1, 1, { severity: 'hint' }),
       at(1, 1, { severity: 'info' }),
       at(1, 1, { severity: 'error' }),
       at(1, 1, { severity: 'warning' }),
     ])
-    expect(sorted.map((diagnostic) => diagnostic.severity)).toEqual(['error', 'warning', 'info'])
+    expect(sorted.map((diagnostic) => diagnostic.severity)).toEqual([
+      'error',
+      'warning',
+      'info',
+      'hint',
+    ])
   })
 
   it('drops duplicates', () => {

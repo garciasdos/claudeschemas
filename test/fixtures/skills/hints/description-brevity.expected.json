@@ -1,0 +1,4 @@
+{
+  "hint": "The description is too short to match a request against.",
+  "ruleIds": ["skill/description-brevity"]
+}

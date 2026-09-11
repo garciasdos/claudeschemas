@@ -1,6 +1,6 @@
 ---
 name: summarize-release-notes
-description: Turns a list of merged pull requests into release notes grouped by audience-visible change.
+description: Turns a list of merged pull requests into release notes grouped by audience-visible change. Use when a release is being cut or someone asks for release notes.
 license: Apache-2.0
 compatibility: Works in Claude Code, claude.ai and the Skills API; needs no tools beyond reading the repository.
 metadata:

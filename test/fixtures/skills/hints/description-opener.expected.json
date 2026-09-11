@@ -1,0 +1,4 @@
+{
+  "hint": "The description opens with filler instead of what the skill does.",
+  "ruleIds": ["skill/description-opener"]
+}

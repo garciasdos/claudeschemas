@@ -1,6 +1,6 @@
 ---
 name: format-imports
-description: Sorts and groups the import statements of a TypeScript file the way this repository does, so diffs stay small.
+description: Sorts and groups the import statements of a TypeScript file the way this repository does, so diffs stay small. Use when imports are out of order or a review asks for them to be tidied.
 ---
 
 # Format imports

@@ -1,0 +1,4 @@
+{
+  "hint": "The name repeats the word skill.",
+  "ruleIds": ["skill/name-says-skill"]
+}

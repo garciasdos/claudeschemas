@@ -2,6 +2,8 @@
 
 A static, client-side validator for Claude `.md` document formats, in the spirit of jsonschemavalidator.net. The first supported document kind is `SKILL.md` (Claude Code Agent Skills).
 
+Besides schema and semantic problems, the validator lists improvement hints for a skill that is already valid: a description that never says when to use the skill or speaks in the first person, declared arguments the body never places, a missing `argument-hint`, an empty or unstructured body, leftover `TODO` text, shell blocks without `allowed-tools`, and similar. Hints are shown apart from problems and never count against "No problems found".
+
 ## Development
 
 ```

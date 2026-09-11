@@ -36,3 +36,9 @@ export const findInBody = (document: ParsedDocument, pattern: RegExp): BodyMatch
   }
   return matches
 }
+
+export const findUnescapedInBody = (document: ParsedDocument, pattern: RegExp): BodyMatch[] =>
+  findInBody(document, pattern).filter((match) => !isEscaped(document.body.text, match.value.index))
+
+export const bodyLines = (document: ParsedDocument): string[] =>
+  document.body.text.length === 0 ? [] : document.body.text.split('\n')

@@ -1,6 +1,6 @@
 ---
 name: request-review
-description: Opens a review request for a pull request and assigns the reviewer the author asked for.
+description: Opens a review request for a pull request and assigns the reviewer the author asked for. Use when the author asks for a review or names a reviewer.
 argument-hint: '[pull-request] [reviewer]'
 arguments:
   - pull-request

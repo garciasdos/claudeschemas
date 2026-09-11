@@ -1,0 +1,4 @@
+{
+  "hint": "The body runs shell commands but declares no allowed-tools.",
+  "ruleIds": ["skill/shell-without-allowed-tools"]
+}

@@ -1,0 +1,4 @@
+{
+  "hint": "Arguments are declared but the body never places them.",
+  "ruleIds": ["skill/unused-arguments"]
+}

@@ -1,0 +1,4 @@
+{
+  "hint": "Nothing follows the frontmatter.",
+  "ruleIds": ["skill/empty-body"]
+}

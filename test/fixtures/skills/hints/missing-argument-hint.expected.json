@@ -1,0 +1,4 @@
+{
+  "hint": "The skill takes an argument but gives the / menu no hint about it.",
+  "ruleIds": ["skill/missing-argument-hint"]
+}

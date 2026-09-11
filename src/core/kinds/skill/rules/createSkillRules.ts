@@ -9,6 +9,7 @@ import { MissingFrontmatterRule } from './MissingFrontmatterRule'
 import { NameFormatRule } from './NameFormatRule'
 import { ReservedNameRule } from './ReservedNameRule'
 import { UninvokableSkillRule } from './UninvokableSkillRule'
+import { createSkillHintRules } from './hints/createSkillHintRules'
 
 export const createSkillRules = (): Rule[] => [
   new MissingFrontmatterRule(),
@@ -21,4 +22,5 @@ export const createSkillRules = (): Rule[] => [
   new ArgumentPlaceholderRule(),
   new ClaudeVariableRule(),
   new BodyLineCountRule(),
+  ...createSkillHintRules(),
 ]

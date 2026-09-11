@@ -94,6 +94,10 @@
   background: var(--info);
 }
 
+.editor-host .cm-lint-marker-hint {
+  background: var(--hint);
+}
+
 .editor-host .cm-lintRange {
   background-image: none;
   text-decoration: underline wavy;
@@ -111,6 +115,11 @@
 
 .editor-host .cm-lintRange-info {
   text-decoration-color: var(--info);
+}
+
+.editor-host .cm-lintRange-hint {
+  text-decoration-style: dotted;
+  text-decoration-color: var(--hint);
 }
 
 .editor-host .cm-tooltip {
@@ -143,6 +152,10 @@
 
 .editor-host .cm-diagnostic-info {
   border-left-color: var(--info);
+}
+
+.editor-host .cm-diagnostic-hint {
+  border-left-color: var(--hint);
 }
 
 .editor-host .cm-diagnosticSource {

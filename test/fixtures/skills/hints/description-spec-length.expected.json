@@ -1,0 +1,4 @@
+{
+  "hint": "The description fits Claude Code but exceeds the Agent Skills spec cap of 1024 characters.",
+  "ruleIds": ["skill/description-spec-length"]
+}

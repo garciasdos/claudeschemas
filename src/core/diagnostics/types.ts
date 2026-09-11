@@ -8,7 +8,7 @@ export interface Range {
   end: Position
 }
 
-export type Severity = 'error' | 'warning' | 'info'
+export type Severity = 'error' | 'warning' | 'info' | 'hint'
 
 export interface Diagnostic {
   ruleId: string

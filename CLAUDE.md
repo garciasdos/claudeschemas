@@ -51,6 +51,14 @@ instances (`createSkillRules()`), wired together by `createSkillDocumentKind()` 
 `SkillDocumentKind`. `SkillDocumentKind.validate` merges YAML-syntax, JSON Schema, and rule
 diagnostics, then runs them through `normalizeDiagnostics`.
 
+Improvement hints are ordinary `Rule` instances with severity `hint`, kept under
+`src/core/kinds/skill/rules/hints/` and listed by `createSkillHintRules()`, which
+`createSkillRules()` appends after the validation rules. A hint never reports a violation; it
+points at something a valid skill could do better (a description that never says when to use the
+skill, arguments declared but never placed, a shell block with no `allowed-tools`, and so on). The
+web panel lists hints in their own section below the problems, and "No problems found" ignores
+them.
+
 JSON Schemas live in `schemas/*.schema.json` as plain, standalone documents with no dependency on
 this project's code — usable with any JSON Schema validator. They are served in dev and emitted
 into the build by the `staticSchemas` plugin in `vite.config.ts`, which reads a `schemaAssets`
@@ -70,7 +78,10 @@ list of `{ fileName, source }` entries.
 7. Register it in `createDefaultRegistry()` (`src/core/createDefaultRegistry.ts`).
 8. Add fixtures under `test/fixtures/<kind>/valid/*.md` and `test/fixtures/<kind>/invalid/*.md`
    with one `.expected.json` sidecar per invalid fixture: `{ "problem": string, "ruleIds":
-string[] }`. Valid fixtures must produce zero diagnostics.
+string[] }`. Valid fixtures must produce zero diagnostics, hints included. Invalid sidecars list
+   the problem rule ids only; hints that also fire on an invalid fixture are ignored. Hint rules get
+   their own fixtures under `test/fixtures/<kind>/hints/*.md` with a `{ "hint": string, "ruleIds":
+string[] }` sidecar, and must produce nothing but the listed hints.
 9. Add the new schema file to the `schemaAssets` list in `vite.config.ts` so it is served in dev
    and emitted at build.
 
@@ -79,7 +90,8 @@ string[] }`. Valid fixtures must produce zero diagnostics.
 - Rule ids are `<namespace>/<kebab-case-name>`: `skill/name-format` for semantic rules,
   `schema/unknown-field` (etc., from `translateAjvError.ts`) for JSON Schema violations,
   `frontmatter/yaml-syntax` for parse failures.
-- Severities are `error`, `warning`, `info`.
+- Severities are `error`, `warning`, `info`, `hint`. The first three are problems; `hint` is an
+  improvement suggestion and must never fire on a kind's sample or on a valid fixture.
 - Messages are human-readable and tell the author what to do, not just what is wrong (see
   `NameFormatRule` for the pattern).
 - Diagnostics are sorted by line, then column, then severity, then rule id, then message, and
@@ -94,7 +106,7 @@ string[] }`. Valid fixtures must produce zero diagnostics.
 
 CSS custom properties are defined in `src/styles/base.css`: `--space-*`, `--font-ui`/`--font-mono`,
 `--text-*`, `--bg*`/`--text*`/`--border*`, `--accent`/`--focus`, and severity colors
-(`--error`/`--warning`/`--info`/`--success`), plus editor-specific tokens (`--gutter-bg`,
+(`--error`/`--warning`/`--info`/`--hint`/`--success`), plus editor-specific tokens (`--gutter-bg`,
 `--selection`, `--syntax-*`). Light values are on `:root`; dark values are redefined under
 `@media (prefers-color-scheme: dark)`. Chrome uses the system font stack (`--font-ui`); the editor,
 rule ids, and other code-like text use the monospace stack (`--font-mono`).

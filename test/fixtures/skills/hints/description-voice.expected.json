@@ -1,0 +1,4 @@
+{
+  "hint": "The description is written as a conversation instead of a catalogue entry.",
+  "ruleIds": ["skill/description-voice"]
+}
