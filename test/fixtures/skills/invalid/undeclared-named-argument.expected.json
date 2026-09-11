@@ -1,0 +1,4 @@
+{
+  "problem": "$pull-request is not one of the declared named arguments.",
+  "ruleIds": ["skill/argument-placeholder"]
+}

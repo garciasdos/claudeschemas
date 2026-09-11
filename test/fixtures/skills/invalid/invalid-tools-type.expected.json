@@ -1,0 +1,4 @@
+{
+  "problem": "allowed-tools is a number rather than a string or a list of strings.",
+  "ruleIds": ["schema/invalid-value"]
+}

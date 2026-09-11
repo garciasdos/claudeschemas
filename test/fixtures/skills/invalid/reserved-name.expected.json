@@ -1,0 +1,4 @@
+{
+  "problem": "The name synced is reserved for skills downloaded from claude.ai.",
+  "ruleIds": ["skill/reserved-name"]
+}

@@ -1,0 +1,4 @@
+{
+  "problem": "description and when_to_use exceed the shared 1536-character listing cap.",
+  "ruleIds": ["skill/description-length"]
+}
