@@ -1,0 +1,153 @@
+.editor-host {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--bg-raised);
+}
+
+.editor-host .cm-editor {
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.editor-host .cm-editor.cm-focused {
+  outline: none;
+}
+
+.editor-host .cm-editor.cm-focused .cm-gutters {
+  border-right-color: var(--border-strong);
+}
+
+.editor-host .cm-scroller {
+  font-family: inherit;
+  overflow: auto;
+}
+
+.editor-host .cm-content {
+  padding: var(--space-3) 0 40vh;
+  caret-color: var(--text);
+}
+
+.editor-host .cm-line {
+  padding: 0 var(--space-4) 0 var(--space-3);
+}
+
+.editor-host .cm-gutters {
+  background: var(--gutter-bg);
+  color: var(--text-faint);
+  border-right: 1px solid var(--border);
+}
+
+.editor-host .cm-lineNumbers .cm-gutterElement {
+  padding: 0 var(--space-2);
+  min-width: 0;
+}
+
+.editor-host .cm-activeLine,
+.editor-host .cm-activeLineGutter {
+  background: var(--active-line);
+}
+
+.editor-host .cm-cursor,
+.editor-host .cm-dropCursor {
+  border-left-color: var(--text);
+}
+
+.editor-host .cm-selectionBackground,
+.editor-host .cm-content ::selection {
+  background: var(--selection);
+}
+
+.editor-host .cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+  background: var(--selection);
+}
+
+.editor-host .cm-gutter-lint {
+  width: 14px;
+}
+
+.editor-host .cm-gutter-lint .cm-gutterElement {
+  padding: 0;
+}
+
+.editor-host .cm-lint-marker {
+  width: 8px;
+  height: 8px;
+  margin: 4px 3px;
+  content: none;
+  border-radius: 1px;
+}
+
+.editor-host .cm-lint-marker-error {
+  background: var(--error);
+}
+
+.editor-host .cm-lint-marker-warning {
+  background: var(--warning);
+}
+
+.editor-host .cm-lint-marker-info {
+  background: var(--info);
+}
+
+.editor-host .cm-lintRange {
+  background-image: none;
+  text-decoration: underline wavy;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 3px;
+}
+
+.editor-host .cm-lintRange-error {
+  text-decoration-color: var(--error);
+}
+
+.editor-host .cm-lintRange-warning {
+  text-decoration-color: var(--warning);
+}
+
+.editor-host .cm-lintRange-info {
+  text-decoration-color: var(--info);
+}
+
+.editor-host .cm-tooltip {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  max-width: 320px;
+}
+
+.editor-host .cm-tooltip.cm-tooltip-lint {
+  padding: var(--space-1) 0;
+}
+
+.editor-host .cm-diagnostic {
+  border-left: 2px solid transparent;
+  padding: var(--space-1) var(--space-2);
+  margin: 0;
+}
+
+.editor-host .cm-diagnostic-error {
+  border-left-color: var(--error);
+}
+
+.editor-host .cm-diagnostic-warning {
+  border-left-color: var(--warning);
+}
+
+.editor-host .cm-diagnostic-info {
+  border-left-color: var(--info);
+}
+
+.editor-host .cm-diagnosticSource {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  opacity: 1;
+}
