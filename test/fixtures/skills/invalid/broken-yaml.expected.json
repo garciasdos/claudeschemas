@@ -1,0 +1,4 @@
+{
+  "problem": "The flow sequence in allowed-tools is never closed, so the YAML cannot be parsed.",
+  "ruleIds": ["frontmatter/yaml-syntax"]
+}

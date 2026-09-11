@@ -1,0 +1,4 @@
+{
+  "problem": "No description, so Claude falls back to the first non-empty body line.",
+  "ruleIds": ["skill/missing-description"]
+}

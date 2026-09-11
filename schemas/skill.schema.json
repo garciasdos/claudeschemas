@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://garciasdos.github.io/claudeschemas/schemas/skill.schema.json",
+  "title": "Claude Code Agent Skill frontmatter",
+  "description": "YAML frontmatter of a Claude Code Agent Skill (SKILL.md). Every field is optional: a SKILL.md with no frontmatter is loaded as plain instructions, and the skill name then defaults to the directory name. Boolean fields also accept yes, no, on, off, 1 and 0.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "description": "Display name shown in skill listings. Defaults to the directory the SKILL.md lives in. The Agent Skills spec expects lowercase letters, digits and single hyphens, at most 64 characters; `synced` is reserved for skills downloaded from claude.ai.",
+      "type": "string"
+    },
+    "description": {
+      "description": "What the skill does and when to apply it. Claude reads this to decide whether to invoke the skill. If omitted, the first non-empty line of the body is used instead. Put the key use case first: `description` and `when_to_use` are truncated together at 1536 characters in the skill listing.",
+      "type": "string"
+    },
+    "when_to_use": {
+      "description": "Extra invocation context such as trigger phrases or example requests. Appended to `description` in the skill listing and counts toward the shared 1536-character cap.",
+      "type": "string"
+    },
+    "argument-hint": {
+      "description": "Hint shown during slash-command autocomplete, for example `[issue-number]` or `\"[filename] [format]\"`. Unquoted square brackets are read by YAML as a list, so quote a hint that names more than one argument.",
+      "allOf": [{ "$ref": "#/definitions/stringOrStringList" }]
+    },
+    "arguments": {
+      "description": "Named positional arguments available in the body as `$name`. Accepts a space-separated string or a YAML list; names map to argument positions in order.",
+      "allOf": [{ "$ref": "#/definitions/stringOrStringList" }]
+    },
+    "disable-model-invocation": {
+      "description": "Set to true to stop Claude from loading the skill on its own, leaving `/name` as the only way in. Defaults to false.",
+      "allOf": [{ "$ref": "#/definitions/booleanValue" }]
+    },
+    "user-invocable": {
+      "description": "Set to false to hide the skill from the `/` menu so that only Claude can invoke it. Defaults to true.",
+      "allOf": [{ "$ref": "#/definitions/booleanValue" }]
+    },
+    "allowed-tools": {
+      "description": "Tools Claude may use without a permission prompt during the turn that invokes the skill, for example `Bash(npm test:*)`. Accepts a space- or comma-separated string, or a YAML list.",
+      "allOf": [{ "$ref": "#/definitions/stringOrStringList" }]
+    },
+    "disallowed-tools": {
+      "description": "Tools removed from Claude's pool while the skill is active. Accepts a space- or comma-separated string, or a YAML list.",
+      "allOf": [{ "$ref": "#/definitions/stringOrStringList" }]
+    },
+    "model": {
+      "description": "Model to use while the skill is active: a model name, or `inherit` to keep the session model. With `context: fork` it sets the forked subagent's model.",
+      "type": "string"
+    },
+    "effort": {
+      "description": "Effort level while the skill is active. Overrides the session effort; available levels depend on the model.",
+      "type": "string",
+      "enum": ["low", "medium", "high", "xhigh", "max"]
+    },
+    "context": {
+      "description": "Set to `fork` to run the skill in an isolated subagent context instead of the main conversation.",
+      "type": "string"
+    },
+    "agent": {
+      "description": "Subagent type that runs the skill. Only meaningful together with `context: fork`. Defaults to general-purpose.",
+      "type": "string"
+    },
+    "background": {
+      "description": "Only applies with `context: fork`. Set to false to wait for the forked subagent's result in the invoking turn instead of running it in the background. Defaults to true.",
+      "allOf": [{ "$ref": "#/definitions/booleanValue" }]
+    },
+    "hooks": {
+      "description": "Hooks registered when the skill is invoked, kept for the rest of the session. Keyed by hook event name such as PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, SessionEnd, Notification, SubagentStop, PreCompact or PermissionRequest.",
+      "type": "object",
+      "additionalProperties": {
+        "description": "Matcher groups for one hook event.",
+        "type": "array",
+        "items": { "$ref": "#/definitions/hookMatcherGroup" }
+      }
+    },
+    "paths": {
+      "description": "Glob patterns that limit automatic activation to sessions working on matching files, for example `src/**/*.ts`. Accepts a comma-separated string or a YAML list.",
+      "allOf": [{ "$ref": "#/definitions/stringOrStringList" }]
+    },
+    "shell": {
+      "description": "Shell used for inline command injection and fenced injection blocks in the body. Defaults to bash.",
+      "type": "string",
+      "enum": ["bash", "powershell"]
+    },
+    "metadata": {
+      "description": "Free-form map for your own tooling, such as catalog or entitlement fields. Claude Code never acts on its contents. Avoid reusing frontmatter field names as keys.",
+      "type": "object"
+    },
+    "license": {
+      "description": "License covering the skill, from the Agent Skills spec. Accepted but not acted on by Claude Code.",
+      "type": "string"
+    },
+    "compatibility": {
+      "description": "Environment requirements such as intended products or system prerequisites, from the Agent Skills spec. At most 500 characters.",
+      "type": "string",
+      "maxLength": 500
+    }
+  },
+  "definitions": {
+    "booleanValue": {
+      "title": "boolean value",
+      "description": "true or false, or one of the strings yes, no, on and off in any letter case, or the numbers 1 and 0.",
+      "type": ["boolean", "string", "integer"],
+      "pattern": "^([yY][eE][sS]|[nN][oO]|[oO][nN]|[oO][fF][fF]|[tT][rR][uU][eE]|[fF][aA][lL][sS][eE])$",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "stringOrStringList": {
+      "title": "string or list of strings",
+      "description": "A single string, or a YAML list of strings.",
+      "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+    },
+    "hookMatcherGroup": {
+      "title": "hook matcher group",
+      "description": "A matcher and the commands to run for it.",
+      "type": "object",
+      "properties": {
+        "matcher": {
+          "description": "Pattern selecting what the hook applies to, such as a tool name for PreToolUse. Omit to match everything.",
+          "type": "string"
+        },
+        "once": {
+          "description": "Run the hook only the first time the event fires for this skill.",
+          "allOf": [{ "$ref": "#/definitions/booleanValue" }]
+        },
+        "hooks": {
+          "description": "Commands to run when the matcher applies.",
+          "type": "array",
+          "items": {
+            "description": "A single hook command.",
+            "type": "object",
+            "properties": {
+              "type": {
+                "description": "Hook kind. Only `command` is supported.",
+                "type": "string"
+              },
+              "command": {
+                "description": "Shell command to run.",
+                "type": "string"
+              },
+              "timeout": {
+                "description": "Seconds to wait before the command is cancelled.",
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

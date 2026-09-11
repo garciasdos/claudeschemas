@@ -1,0 +1,4 @@
+{
+  "problem": "effort accepts only low, medium, high, xhigh and max.",
+  "ruleIds": ["schema/enum"]
+}

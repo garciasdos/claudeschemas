@@ -1,0 +1,4 @@
+{
+  "problem": "CLAUDE_SKILL_DIRECTORY is not a Claude Code variable; the name is CLAUDE_SKILL_DIR.",
+  "ruleIds": ["skill/unknown-claude-variable"]
+}

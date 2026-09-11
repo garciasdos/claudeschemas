@@ -1,0 +1,4 @@
+{
+  "problem": "The body is past the recommended 500 lines.",
+  "ruleIds": ["skill/body-line-count"]
+}

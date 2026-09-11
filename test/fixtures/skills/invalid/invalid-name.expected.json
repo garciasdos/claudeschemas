@@ -1,0 +1,4 @@
+{
+  "problem": "The skill name uses capitals and an underscore.",
+  "ruleIds": ["skill/name-format"]
+}

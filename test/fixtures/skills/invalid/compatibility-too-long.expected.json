@@ -1,0 +1,4 @@
+{
+  "problem": "compatibility is longer than the 500 characters the Agent Skills spec allows.",
+  "ruleIds": ["schema/max-length"]
+}

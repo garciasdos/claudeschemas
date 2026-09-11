@@ -1,0 +1,4 @@
+{
+  "problem": "agent is set but the skill never forks, so the subagent type is ignored.",
+  "ruleIds": ["skill/agent-without-fork"]
+}

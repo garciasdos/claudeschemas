@@ -1,0 +1,4 @@
+{
+  "problem": "No frontmatter at all, so the whole file is treated as instructions.",
+  "ruleIds": ["skill/no-frontmatter"]
+}

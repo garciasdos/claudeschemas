@@ -1,0 +1,4 @@
+{
+  "problem": "Neither Claude nor the user can invoke this skill.",
+  "ruleIds": ["skill/uninvokable"]
+}

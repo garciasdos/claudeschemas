@@ -1,0 +1,4 @@
+{
+  "problem": "allowed-tool is a misspelling of allowed-tools and is not a frontmatter field.",
+  "ruleIds": ["schema/unknown-field"]
+}
