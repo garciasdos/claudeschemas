@@ -3,3 +3,4 @@ export type { Frontmatter, ParsedDocument, DocumentParser } from './document/typ
 export type { Rule } from './rules/types'
 export type { DocumentKind, DocumentKindRegistry } from './kinds/types'
 export { InMemoryDocumentKindRegistry } from './kinds/InMemoryDocumentKindRegistry'
+export { createDefaultRegistry } from './createDefaultRegistry'
