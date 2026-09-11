@@ -23,7 +23,8 @@
     "@codemirror/language": "^6.11.3",
     "@codemirror/lang-markdown": "^6.3.4",
     "@codemirror/lang-yaml": "^6.1.2",
-    "@codemirror/commands": "^6.8.1"
+    "@codemirror/commands": "^6.8.1",
+    "@lezer/highlight": "^1.2.3"
   },
   "devDependencies": {
     "vite": "^6.3.5",

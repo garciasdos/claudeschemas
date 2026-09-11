@@ -1,0 +1,150 @@
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  --font-ui: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --text-base: 14px;
+  --text-small: 12px;
+  --line-tight: 1.3;
+  --line-body: 1.5;
+
+  --bg: #fbfbf9;
+  --bg-raised: #ffffff;
+  --bg-subtle: #f2f2ee;
+  --bg-active: #ebebe6;
+  --text: #1b1b19;
+  --text-muted: #6a6a63;
+  --text-faint: #8d8d85;
+  --border: #e0e0da;
+  --border-strong: #c9c9c1;
+
+  --accent: #1c56c4;
+  --focus: #1c56c4;
+
+  --error: #b3261e;
+  --warning: #9a5b06;
+  --info: #0f6b72;
+  --success: #1d6b45;
+
+  --gutter-bg: #f6f6f3;
+  --selection: #cfe0ff;
+  --active-line: #f4f4f0;
+
+  --syntax-heading: #1b1b19;
+  --syntax-keyword: #7a3ea1;
+  --syntax-string: #1d6b45;
+  --syntax-meta: #6a6a63;
+  --syntax-atom: #9a5b06;
+  --syntax-link: #1c56c4;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #191918;
+    --bg-raised: #1f1f1e;
+    --bg-subtle: #252523;
+    --bg-active: #2e2e2b;
+    --text: #ededea;
+    --text-muted: #a2a29a;
+    --text-faint: #85857c;
+    --border: #333330;
+    --border-strong: #47473f;
+
+    --accent: #86aaf0;
+    --focus: #86aaf0;
+
+    --error: #f08279;
+    --warning: #e0a244;
+    --info: #5cb3b8;
+    --success: #6fbf92;
+
+    --gutter-bg: #1d1d1c;
+    --selection: #2f4468;
+    --active-line: #211f1f;
+
+    --syntax-heading: #ededea;
+    --syntax-keyword: #c79bea;
+    --syntax-string: #8fc9a7;
+    --syntax-meta: #a2a29a;
+    --syntax-atom: #e0a244;
+    --syntax-link: #86aaf0;
+
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  line-height: var(--line-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
