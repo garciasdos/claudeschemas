@@ -2,7 +2,7 @@ import type { Diagnostic, Severity } from '../../../../diagnostics/types'
 import type { ParsedDocument } from '../../../../document/types'
 import type { Rule } from '../../../../rules/types'
 import { SkillFrontmatter } from '../../SkillFrontmatter'
-import { findUnescapedInBody } from '../bodyMatches'
+import { findUnescapedOutsideFences } from '../bodyMatches'
 import { positionalPlaceholder } from './argumentUsage'
 
 const hasArgumentHint = (frontmatter: SkillFrontmatter): boolean => {
@@ -29,7 +29,7 @@ export class MissingArgumentHintRule implements Rule {
     if (declared.length > 0) {
       return [this.report(frontmatter, frontmatter.range('arguments'), 'frontmatter')]
     }
-    const placeholder = findUnescapedInBody(document, positionalPlaceholder)[0]
+    const placeholder = findUnescapedOutsideFences(document, positionalPlaceholder)[0]
     if (placeholder === undefined) {
       return []
     }

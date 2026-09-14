@@ -1,6 +1,8 @@
 import type { Range } from '../../../diagnostics/types'
 import type { ParsedDocument } from '../../../document/types'
 import { shiftRange } from '../../../document/positions'
+import type { BodyLine, FencedRegion } from '../rules/fencedRegions'
+import { fencedRegions, isInsideFence, readBodyLines } from '../rules/fencedRegions'
 
 export type SkillBodyConstructKind = 'injection' | 'argument' | 'variable'
 
@@ -13,12 +15,6 @@ export interface SkillBodyConstruct {
   readonly removable: boolean
 }
 
-interface BodyLine {
-  readonly text: string
-  readonly start: number
-}
-
-const fenceOpener = /^ {0,3}(`{3,}|~{3,})(.*)$/
 const inlineInjection = /(?<=^|\s)!`[^`\n]+`/g
 const claudeVariable = /\$\{CLAUDE_[A-Za-z0-9_]*\}/g
 const positionalArgument = /\$(?:ARGUMENTS(?:\[\d+\])?|\d+)/g
@@ -30,86 +26,31 @@ const namedArgumentPattern = (names: readonly string[]): RegExp | null => {
   return escaped.length === 0 ? null : new RegExp(`\\$(?:${escaped.join('|')})\\b`, 'g')
 }
 
-const readLines = (text: string): BodyLine[] => {
-  const lines: BodyLine[] = []
-  let start = 0
-  for (const line of text.split('\n')) {
-    lines.push({ text: line, start })
-    start += line.length + 1
-  }
-  return lines
-}
-
 const isEscapedAt = (text: string, index: number): boolean =>
   text[index - 1] === '\\' && text[index - 2] !== '\\'
-
-const closesFence = (line: string, marker: string): boolean => {
-  const match = fenceOpener.exec(line)
-  return (
-    match !== null &&
-    match[1] !== undefined &&
-    match[1][0] === marker[0] &&
-    match[1].length >= marker.length &&
-    (match[2] ?? '').trim().length === 0
-  )
-}
 
 export class SkillBodyConstructScanner {
   constructor(private readonly argumentNames: readonly string[] = []) {}
 
   scan(document: ParsedDocument): SkillBodyConstruct[] {
-    const text = document.body.text
-    const lines = readLines(text)
-    const constructs: SkillBodyConstruct[] = []
-    let index = 0
+    const regions = fencedRegions(document)
+    const blocks = regions
+      .filter((region) => region.infoString === '!')
+      .map((region) => this.injectionBlock(document, region))
+    const inline = readBodyLines(document.body.text)
+      .flatMap((line) => this.scanLine(document, line))
+      .filter((construct) => !isInsideFence(regions, construct.start))
 
-    while (index < lines.length) {
-      const line = lines[index]
-      if (line === undefined) {
-        break
-      }
-      const opener = fenceOpener.exec(line.text)
-      const marker = opener?.[1]
-      if (marker === undefined) {
-        constructs.push(...this.scanLine(document, line))
-        index += 1
-        continue
-      }
-      const closingIndex = this.findClosingFence(lines, index, marker)
-      if ((opener?.[2] ?? '').trim() === '!') {
-        constructs.push(this.injectionBlock(document, lines, index, closingIndex))
-      }
-      index = closingIndex + 1
-    }
-
-    return constructs.sort((left, right) => left.start - right.start)
+    return [...blocks, ...inline].sort((left, right) => left.start - right.start)
   }
 
-  private findClosingFence(lines: readonly BodyLine[], openIndex: number, marker: string): number {
-    for (let index = openIndex + 1; index < lines.length; index += 1) {
-      if (closesFence(lines[index]?.text ?? '', marker)) {
-        return index
-      }
-    }
-    return lines.length - 1
-  }
-
-  private injectionBlock(
-    document: ParsedDocument,
-    lines: readonly BodyLine[],
-    openIndex: number,
-    closingIndex: number,
-  ): SkillBodyConstruct {
-    const open = lines[openIndex]
-    const close = lines[closingIndex]
-    const start = open?.start ?? 0
-    const end = (close?.start ?? start) + (close?.text.length ?? 0)
+  private injectionBlock(document: ParsedDocument, region: FencedRegion): SkillBodyConstruct {
     return this.create(
       document,
       'injection',
-      document.body.text.slice(start, end),
-      start,
-      end,
+      document.body.text.slice(region.start, region.end),
+      region.start,
+      region.end,
       true,
     )
   }

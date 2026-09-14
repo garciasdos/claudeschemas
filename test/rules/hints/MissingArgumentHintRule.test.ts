@@ -28,6 +28,18 @@ describe('MissingArgumentHintRule', () => {
     expect(rule.check(withFrontmatter('name: demo', 'Use $0 and $ARGUMENTS[1].\n'))).toHaveLength(1)
   })
 
+  it('ignores a placeholder that only appears inside a fenced code block', () => {
+    const documented = 'The syntax is:\n\n```markdown\n$ARGUMENTS\n```\n'
+    expect(rule.check(withFrontmatter('name: demo', documented))).toEqual([])
+  })
+
+  it('still hints at a placeholder outside a fence that also appears inside one', () => {
+    const mixed = 'Close $ARGUMENTS.\n\n```markdown\n$ARGUMENTS\n```\n'
+    const diagnostics = rule.check(withFrontmatter('name: demo', mixed))
+    expect(diagnostics).toHaveLength(1)
+    expect(diagnostics[0]?.range.start.line).toBe(5)
+  })
+
   it('ignores an escaped placeholder', () => {
     expect(rule.check(withFrontmatter('name: demo', 'Costs \\$5.\n'))).toEqual([])
   })
