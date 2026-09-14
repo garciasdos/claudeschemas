@@ -1,0 +1,4 @@
+{
+  "problem": "background is set but the skill never forks, so the field is ignored.",
+  "ruleIds": ["skill/background-without-fork"]
+}

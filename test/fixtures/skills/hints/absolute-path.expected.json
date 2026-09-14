@@ -1,0 +1,4 @@
+{
+  "hint": "The renderer is addressed by an absolute path on one machine.",
+  "ruleIds": ["skill/absolute-path"]
+}

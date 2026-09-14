@@ -1,5 +1,11 @@
 import type { Rule } from '../../../rules/types'
 import { AgentWithoutForkRule } from './AgentWithoutForkRule'
+import { ArgumentNameFormatRule } from './ArgumentNameFormatRule'
+import { BackgroundWithoutForkRule } from './BackgroundWithoutForkRule'
+import { DeadModelInvocationFieldRule } from './DeadModelInvocationFieldRule'
+import { DuplicateArgumentRule } from './DuplicateArgumentRule'
+import { HookMatcherIgnoredRule } from './HookMatcherIgnoredRule'
+import { ToolInBothListsRule } from './ToolInBothListsRule'
 import { ArgumentPlaceholderRule } from './ArgumentPlaceholderRule'
 import { BodyLineCountRule } from './BodyLineCountRule'
 import { ClaudeVariableRule } from './ClaudeVariableRule'
@@ -19,7 +25,13 @@ export const createSkillRules = (): Rule[] => [
   new DescriptionLengthRule(),
   new UninvokableSkillRule(),
   new AgentWithoutForkRule(),
+  new BackgroundWithoutForkRule(),
+  new DeadModelInvocationFieldRule(),
+  new ToolInBothListsRule(),
+  new ArgumentNameFormatRule(),
+  new DuplicateArgumentRule(),
   new ArgumentPlaceholderRule(),
+  new HookMatcherIgnoredRule(),
   new ClaudeVariableRule(),
   new BodyLineCountRule(),
   ...createSkillHintRules(),

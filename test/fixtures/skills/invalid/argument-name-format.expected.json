@@ -1,0 +1,4 @@
+{
+  "problem": "Check_Name mixes case and underscores instead of the lowercase hyphenated form.",
+  "ruleIds": ["skill/argument-name-format"]
+}

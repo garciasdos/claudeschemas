@@ -1,0 +1,4 @@
+{
+  "hint": "The injected git command is not pre-approved, so an unmatched permission check aborts the skill.",
+  "ruleIds": ["skill/inline-command-without-bash"]
+}

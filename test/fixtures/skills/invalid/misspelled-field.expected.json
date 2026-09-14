@@ -1,0 +1,4 @@
+{
+  "problem": "Description and allowed_tools are near misses of description and allowed-tools.",
+  "ruleIds": ["schema/unknown-field", "skill/missing-description"]
+}

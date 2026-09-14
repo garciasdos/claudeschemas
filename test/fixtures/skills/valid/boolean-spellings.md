@@ -1,7 +1,6 @@
 ---
 name: deploy-staging
 description: Deploys the current commit to the staging environment and waits for the health check to pass.
-when_to_use: Use only when the user asks for a staging deploy by name.
 disable-model-invocation: yes
 user-invocable: on
 effort: medium
