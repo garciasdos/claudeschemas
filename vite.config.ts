@@ -1,9 +1,19 @@
 import { defineConfig } from 'vite'
 import type { Plugin } from 'vite'
 import skillSchema from './schemas/skill.schema.json'
+import skillsApiSchema from './schemas/skill.skills-api.schema.json'
+import agentSkillsSpecSchema from './schemas/skill.agent-skills-spec.schema.json'
 
 const schemaAssets = [
   { fileName: 'schemas/skill.schema.json', source: `${JSON.stringify(skillSchema, null, 2)}\n` },
+  {
+    fileName: 'schemas/skill.skills-api.schema.json',
+    source: `${JSON.stringify(skillsApiSchema, null, 2)}\n`,
+  },
+  {
+    fileName: 'schemas/skill.agent-skills-spec.schema.json',
+    source: `${JSON.stringify(agentSkillsSpecSchema, null, 2)}\n`,
+  },
 ]
 
 interface SchemaResponse {

@@ -7,7 +7,10 @@ const makeKind = (id: string): DocumentKind => ({
   label: id,
   schemaUrl: `/schemas/${id}.json`,
   sample: '',
+  targets: [{ id: 'default', label: 'Default', schemaUrl: `/schemas/${id}.json` }],
+  defaultTargetId: 'default',
   validate: () => [],
+  toPortable: () => null,
 })
 
 describe('InMemoryDocumentKindRegistry', () => {

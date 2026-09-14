@@ -3,6 +3,7 @@ import type { Diagnostic, DocumentKind } from '../../core'
 export interface ValidationState {
   readonly kind: DocumentKind | null
   readonly text: string
+  readonly targetId: string
   readonly diagnostics: readonly Diagnostic[]
 }
 
@@ -20,6 +21,7 @@ export class ValidationController {
   private readonly listeners = new Set<ValidationListener>()
   private kind: DocumentKind | null = null
   private text = ''
+  private targetId = ''
   private pending: ReturnType<typeof setTimeout> | null = null
 
   constructor(private readonly delayMs = 150) {}
@@ -31,10 +33,17 @@ export class ValidationController {
     }
   }
 
-  setDocument(kind: DocumentKind | null, text: string): void {
+  setDocument(kind: DocumentKind | null, text: string, targetId: string): void {
     this.cancel()
     this.kind = kind
     this.text = text
+    this.targetId = targetId
+    this.run()
+  }
+
+  setTarget(targetId: string): void {
+    this.cancel()
+    this.targetId = targetId
     this.run()
   }
 
@@ -62,15 +71,16 @@ export class ValidationController {
   private run(): void {
     const kind = this.kind
     const text = this.text
+    const targetId = this.targetId
     let diagnostics: readonly Diagnostic[] = []
     if (kind !== null) {
       try {
-        diagnostics = kind.validate(text)
+        diagnostics = kind.validate(text, targetId)
       } catch (error) {
         diagnostics = [failureDiagnostic(error)]
       }
     }
-    const state: ValidationState = { kind, text, diagnostics }
+    const state: ValidationState = { kind, text, targetId, diagnostics }
     for (const listener of this.listeners) {
       listener(state)
     }

@@ -16,6 +16,8 @@
         <div class="header-controls">
           <label class="visually-hidden" for="kind-select">Document kind</label>
           <select class="kind-select" id="kind-select"></select>
+          <label class="visually-hidden" for="target-select">Target</label>
+          <select class="kind-select" id="target-select"></select>
           <a class="schema-link" id="schema-link" href="#" target="_blank" rel="noreferrer"
             >Schema</a
           >
@@ -32,6 +34,9 @@
           <div class="pane-bar">
             <h2 class="pane-title">Problems</h2>
             <div class="pane-actions">
+              <button class="text-button" type="button" id="portable-version" hidden>
+                Portable version
+              </button>
               <button class="text-button" type="button" id="load-sample">Load sample</button>
               <button class="text-button" type="button" id="clear-document">Clear</button>
             </div>
@@ -45,6 +50,7 @@
         >
       </footer>
     </div>
+    <dialog class="portable-dialog" id="portable-dialog" aria-label="Portable version"></dialog>
     <script type="module" src="/src/web/main.ts"></script>
   </body>
 </html>

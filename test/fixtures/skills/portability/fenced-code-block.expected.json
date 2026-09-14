@@ -1,0 +1,9 @@
+{
+  "problem": "Claude Code syntax quoted inside a fenced code block, which is documentation rather than a construct",
+  "targets": {
+    "claude-code": [],
+    "skills-api": [],
+    "agent-skills-spec": [],
+    "all": []
+  }
+}

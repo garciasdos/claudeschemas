@@ -1,16 +1,16 @@
-import type { DocumentKind } from '../../core'
+import type { DocumentTarget } from '../../core'
 
 export class SchemaLinkView {
   constructor(private readonly element: HTMLAnchorElement) {}
 
-  update(kind: DocumentKind | null): void {
-    if (kind === null) {
+  update(target: DocumentTarget | null): void {
+    if (target === null) {
       this.element.removeAttribute('href')
       this.element.setAttribute('aria-disabled', 'true')
       this.element.textContent = 'Schema'
       return
     }
-    this.element.href = kind.schemaUrl
+    this.element.href = target.schemaUrl
     this.element.removeAttribute('aria-disabled')
     this.element.textContent = 'Schema'
   }
