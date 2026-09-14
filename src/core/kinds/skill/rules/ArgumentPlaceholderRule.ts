@@ -5,7 +5,7 @@ import { SkillFrontmatter } from '../SkillFrontmatter'
 import { findInBody, isEscaped } from './bodyMatches'
 
 const indexedPlaceholder = /\$(?:ARGUMENTS\[(\d+)\]|(\d+))/g
-const namedPlaceholder = /\$([a-z][a-z0-9-]*)/g
+const namedPlaceholder = /\$([a-z][A-Za-z0-9_-]*)/g
 
 export class ArgumentPlaceholderRule implements Rule {
   readonly id = 'skill/argument-placeholder'

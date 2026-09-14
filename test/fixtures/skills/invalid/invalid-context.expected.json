@@ -1,0 +1,4 @@
+{
+  "problem": "context accepts only fork.",
+  "ruleIds": ["schema/enum"]
+}

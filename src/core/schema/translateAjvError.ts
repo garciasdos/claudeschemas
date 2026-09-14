@@ -1,6 +1,7 @@
 import type { ErrorObject } from 'ajv'
 import type { SchemaViolation } from './types'
 import { describeProperty } from './describeSchemaNode'
+import { suggestFieldName } from './suggestFieldName'
 
 const ruleIdByKeyword: Record<string, string> = {
   additionalProperties: 'schema/unknown-field',
@@ -51,6 +52,26 @@ const expectationMessage = (
   return `Field "${labelOf(path)}" has a value this schema does not allow.`
 }
 
+const knownFieldNames = (
+  root: Record<string, unknown>,
+  path: readonly (string | number)[],
+): string[] => {
+  const properties = path.length === 0 ? root.properties : null
+  return typeof properties === 'object' && properties !== null ? Object.keys(properties) : []
+}
+
+const unknownFieldMessage = (
+  root: Record<string, unknown>,
+  path: readonly (string | number)[],
+  property: string,
+): string => {
+  const suggestion = suggestFieldName(property, knownFieldNames(root, path))
+  if (suggestion === null) {
+    return `Unknown field "${property}". Remove it, or move it under "metadata".`
+  }
+  return `Unknown field "${property}". Did you mean "${suggestion}"? Field names are case-sensitive and must be spelled exactly.`
+}
+
 export const translateAjvError = (
   root: Record<string, unknown>,
   error: ErrorObject,
@@ -65,7 +86,7 @@ export const translateAjvError = (
     const property = String(readParam(error, 'additionalProperty'))
     return {
       ruleId,
-      message: `Unknown field "${property}". Remove it, or move it under "metadata".`,
+      message: unknownFieldMessage(root, path, property),
       path: [...path, property],
     }
   }

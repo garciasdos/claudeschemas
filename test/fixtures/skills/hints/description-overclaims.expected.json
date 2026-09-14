@@ -1,0 +1,4 @@
+{
+  "hint": "The description asks to be used on every request, so it competes with every other skill.",
+  "ruleIds": ["skill/description-overclaims"]
+}

@@ -53,7 +53,9 @@ export const describeSchemaNode = (root: SchemaNode, value: unknown): string | n
     return withArticle(node.title)
   }
   if (Array.isArray(node.enum)) {
-    return `one of: ${node.enum.map((entry) => String(entry)).join(', ')}`
+    return node.enum.length === 1
+      ? `"${String(node.enum[0])}"`
+      : `one of: ${node.enum.map((entry) => String(entry)).join(', ')}`
   }
   const branches = node.anyOf ?? node.oneOf
   if (Array.isArray(branches)) {

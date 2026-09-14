@@ -1,0 +1,4 @@
+{
+  "problem": "Bash(git log:*) is granted in allowed-tools while Bash is removed in disallowed-tools.",
+  "ruleIds": ["skill/tool-in-both-lists"]
+}

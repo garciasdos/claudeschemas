@@ -1,0 +1,4 @@
+{
+  "hint": "A deploy can run whenever Claude decides a request fits, since model invocation is not disabled.",
+  "ruleIds": ["skill/side-effect-without-guard"]
+}

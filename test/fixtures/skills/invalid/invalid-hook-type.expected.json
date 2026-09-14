@@ -1,0 +1,4 @@
+{
+  "problem": "webhook is not a hook type; use command, http, mcp_tool, prompt or agent.",
+  "ruleIds": ["schema/enum"]
+}

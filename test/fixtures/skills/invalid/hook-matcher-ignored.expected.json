@@ -1,0 +1,4 @@
+{
+  "problem": "Stop hooks have no matcher support, so the matcher is silently ignored.",
+  "ruleIds": ["skill/hook-matcher-ignored"]
+}

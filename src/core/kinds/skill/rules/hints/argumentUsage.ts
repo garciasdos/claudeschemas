@@ -3,7 +3,7 @@ import { findUnescapedInBody } from '../bodyMatches'
 
 export const positionalPlaceholder = /\$(?:ARGUMENTS(?:\[\d+\])?|\d+)\b/g
 
-const namedPlaceholder = /\$([a-z][a-z0-9-]*)\b/g
+const namedPlaceholder = /\$([a-z][A-Za-z0-9_-]*)\b/g
 
 export const referencesArguments = (
   document: ParsedDocument,

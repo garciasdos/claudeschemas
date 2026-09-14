@@ -1,0 +1,4 @@
+{
+  "problem": "when_to_use and paths only matter for automatic invocation, which disable-model-invocation turns off.",
+  "ruleIds": ["skill/dead-model-invocation-field"]
+}

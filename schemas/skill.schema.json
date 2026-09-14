@@ -52,8 +52,9 @@
       "enum": ["low", "medium", "high", "xhigh", "max"]
     },
     "context": {
-      "description": "Set to `fork` to run the skill in an isolated subagent context instead of the main conversation.",
-      "type": "string"
+      "description": "Set to `fork` to run the skill in an isolated subagent context instead of the main conversation. `fork` is the only value Claude Code acts on.",
+      "type": "string",
+      "enum": ["fork"]
     },
     "agent": {
       "description": "Subagent type that runs the skill. Only meaningful together with `context: fork`. Defaults to general-purpose.",
@@ -115,7 +116,7 @@
       "type": "object",
       "properties": {
         "matcher": {
-          "description": "Pattern selecting what the hook applies to, such as a tool name for PreToolUse. Omit to match everything.",
+          "description": "Pattern selecting what the hook applies to, such as a tool name for PreToolUse. Omit to match everything. Silently ignored on events without matcher support, such as Stop and UserPromptSubmit.",
           "type": "string"
         },
         "once": {
@@ -130,11 +131,12 @@
             "type": "object",
             "properties": {
               "type": {
-                "description": "Hook kind. Only `command` is supported.",
-                "type": "string"
+                "description": "Hook kind, in the same format as settings-based hooks: `command` runs a shell command, `http` posts the event to a URL, `mcp_tool` calls a tool on a connected MCP server, `prompt` asks a Claude model, `agent` spawns a subagent.",
+                "type": "string",
+                "enum": ["command", "http", "mcp_tool", "prompt", "agent"]
               },
               "command": {
-                "description": "Shell command to run.",
+                "description": "Shell command to run, for `type: command`.",
                 "type": "string"
               },
               "timeout": {

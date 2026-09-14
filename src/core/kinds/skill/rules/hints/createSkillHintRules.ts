@@ -1,5 +1,9 @@
 import type { Rule } from '../../../../rules/types'
+import { AbsolutePathRule } from './AbsolutePathRule'
 import { DescriptionBrevityRule } from './DescriptionBrevityRule'
+import { DescriptionOverclaimRule } from './DescriptionOverclaimRule'
+import { InlineCommandWithoutBashRule } from './InlineCommandWithoutBashRule'
+import { SideEffectWithoutGuardRule } from './SideEffectWithoutGuardRule'
 import { DescriptionOpenerRule } from './DescriptionOpenerRule'
 import { DescriptionSpecLengthRule } from './DescriptionSpecLengthRule'
 import { DescriptionTriggerRule } from './DescriptionTriggerRule'
@@ -20,6 +24,8 @@ export const createSkillHintRules = (): Rule[] => [
   new DescriptionBrevityRule(),
   new DescriptionTriggerRule(),
   new DescriptionSpecLengthRule(),
+  new DescriptionOverclaimRule(),
+  new SideEffectWithoutGuardRule(),
   new MissingArgumentHintRule(),
   new HiddenArgumentHintRule(),
   new UnusedArgumentsRule(),
@@ -27,4 +33,6 @@ export const createSkillHintRules = (): Rule[] => [
   new UnstructuredBodyRule(),
   new PlaceholderTextRule(),
   new ShellWithoutAllowedToolsRule(),
+  new InlineCommandWithoutBashRule(),
+  new AbsolutePathRule(),
 ]

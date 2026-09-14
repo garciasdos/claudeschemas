@@ -44,6 +44,32 @@ describe('AjvSchemaValidator', () => {
     expect(violations[0]?.path).toEqual(['argument-hints'])
   })
 
+  it('suggests the intended field for a near miss', () => {
+    const violations = validator.validate({ Description: 'x', allowed_tools: 'Read' })
+    expect(violations.map((violation) => violation.message)).toEqual([
+      'Unknown field "Description". Did you mean "description"? Field names are case-sensitive and must be spelled exactly.',
+      'Unknown field "allowed_tools". Did you mean "allowed-tools"? Field names are case-sensitive and must be spelled exactly.',
+    ])
+  })
+
+  it('names the single accepted value of context', () => {
+    const violations = validator.validate({ context: 'main' })
+    expect(violations[0]?.ruleId).toBe('schema/enum')
+    expect(violations[0]?.message).toBe('Field "context" must be "fork".')
+  })
+
+  it('accepts every hook type and rejects an unknown one', () => {
+    const hook = (type: string): Record<string, unknown> => ({
+      hooks: { Stop: [{ hooks: [{ type, command: 'echo' }] }] },
+    })
+    for (const type of ['command', 'http', 'mcp_tool', 'prompt', 'agent']) {
+      expect(validator.validate(hook(type))).toEqual([])
+    }
+    const violations = validator.validate(hook('webhook'))
+    expect(violations[0]?.ruleId).toBe('schema/enum')
+    expect(violations[0]?.path).toEqual(['hooks', 'Stop', 0, 'hooks', 0, 'type'])
+  })
+
   it('lists the allowed values of an enum', () => {
     const violations = validator.validate({ effort: 'ultra' })
     expect(violations[0]?.ruleId).toBe('schema/enum')
