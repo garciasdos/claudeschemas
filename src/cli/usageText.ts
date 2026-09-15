@@ -1,0 +1,16 @@
+export const usageText = [
+  'Usage: node cli.mjs [options] [file ...]',
+  '',
+  'Validates Claude document files against the claudeschemas schemas, semantic rules',
+  'and improvement hints. Reads standard input when no file is given, or for "-".',
+  '',
+  'Options:',
+  '  --kind <id>      document kind to validate against (default: skill)',
+  '  --target <id>    target to check portability against (default: the kind default)',
+  '  --json           emit one JSON object instead of one line per finding',
+  '  --strict         exit non-zero when only improvement hints are reported',
+  '  --list-targets   list the known kinds and their targets, then exit',
+  '  -h, --help       show this message',
+  '',
+  'Exit codes: 0 clean, 1 findings reported, 2 bad usage or unreadable input.',
+].join('\n')

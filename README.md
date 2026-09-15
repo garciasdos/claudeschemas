@@ -29,6 +29,45 @@ Portability findings are problems, not hints: they count against "No problems fo
 
 When a file has portability problems, a portable version of it is shown beside the report: a read-only copy with the frontmatter reduced to the keys the target accepts, in their original order, and the injection lines removed. A note lists what was stripped and what still has to be rewritten by hand, such as an argument placeholder that has no equivalent outside Claude Code. It is a preview with a copy button; the editor itself is never modified.
 
+## Command line
+
+The validator also ships as a single self-contained Node file for agents and CI, published with the
+app. It needs Node 20 or newer and no install step.
+
+```
+curl -fsSL https://garciasdos.github.io/claudeschemas/api/cli.mjs -o /tmp/claudeschemas-cli.mjs
+node /tmp/claudeschemas-cli.mjs path/to/SKILL.md
+```
+
+It prints one line per finding and a summary line per file:
+
+```
+path/to/SKILL.md:3:1: hint: skill/description-brevity: The description is 2 words long...
+path/to/SKILL.md: no problems, 1 hint (claude-code)
+```
+
+- `--json` emits one JSON object with `problems`, `portability`, `hints` and `counts` per file.
+- `--target <id>` picks the target; `--list-targets` prints the known kinds and targets.
+- `--strict` exits non-zero when only improvement hints are left.
+- Several files may be passed at once, and `-` or no path reads standard input.
+
+Exit codes are 0 when clean, 1 when findings were reported, and 2 for bad usage or unreadable
+input.
+
+## Agent skill
+
+`skills/claudeschemas/SKILL.md` teaches Claude to run that CLI over a skill file and act on the
+findings. It is published alongside the CLI, so it can be installed with:
+
+```
+mkdir -p ~/.claude/skills/claudeschemas
+curl -fsSL https://garciasdos.github.io/claudeschemas/api/SKILL.md \
+  -o ~/.claude/skills/claudeschemas/SKILL.md
+```
+
+GitHub Pages serves static files only, so there is no HTTP validation endpoint; the CLI is the
+programmatic surface.
+
 ## Development
 
 ```

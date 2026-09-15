@@ -3,9 +3,13 @@ import '../styles/layout.css'
 import '../styles/editor.css'
 import '../styles/panel.css'
 import '../styles/portable.css'
-import { createDefaultRegistry, type DocumentKind, type DocumentTarget } from '../core'
+import {
+  createDefaultRegistry,
+  groupDiagnostics,
+  type DocumentKind,
+  type DocumentTarget,
+} from '../core'
 import { DiagnosticsPanel } from './diagnostics/DiagnosticsPanel'
-import { groupDiagnostics } from './diagnostics/summary'
 import { requireElement } from './dom'
 import { CodeMirrorEditor } from './editor/CodeMirrorEditor'
 import { KindSelector } from './kinds/KindSelector'

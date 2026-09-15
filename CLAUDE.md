@@ -30,9 +30,11 @@ npm run check        # lint + typecheck + test
 
 ## Architecture
 
-`src/core` has zero DOM dependencies; it is plain TypeScript. `src/web` may only depend on core
-through the public exports in `src/core/index.ts` — never reach into `src/core/**` internals
-directly.
+`src/core` has zero DOM dependencies; it is plain TypeScript. `src/web` (browser) and `src/cli`
+(Node) may only depend on core through the public exports in `src/core/index.ts` — never reach
+into `src/core/**` internals directly, and never depend on each other. Diagnostic grouping
+(`groupDiagnostics`, `problemDiagnostics`, `countBySeverity`) lives in core because both surfaces
+need it; only the wording of counts and section titles stays in `src/web/diagnostics/summary.ts`.
 
 Core contracts (see `src/core/index.ts` for the full export list):
 
@@ -63,6 +65,24 @@ JSON Schemas live in `schemas/*.schema.json` as plain, standalone documents with
 this project's code — usable with any JSON Schema validator. They are served in dev and emitted
 into the build by the `staticSchemas` plugin in `vite.config.ts`, which reads a `schemaAssets`
 list of `{ fileName, source }` entries.
+
+## Command line and agent surface
+
+`src/cli` is a Node CLI over the same core: `parseCliOptions` reads the arguments,
+`FileDocumentSourceReader` reads the files or standard input, `DocumentValidationService` resolves
+the kind and target and produces a `ValidationReport`, and a `ReportFormatter`
+(`TextReportFormatter` or `JsonReportFormatter`) turns it into lines. `CliApplication` wires those
+together and returns the exit code: 0 clean, 1 findings reported, 2 bad usage or unreadable input.
+`src/cli/main.ts` is the composition root and the only file that touches `process`.
+
+`vite.cli.config.ts` bundles it into `dist/api/cli.mjs` as one self-contained ESM file (Node
+builtins external, shebang banner) and copies `skills/claudeschemas/SKILL.md` to
+`dist/api/SKILL.md`. `npm run build` runs the app build first, then the CLI build, so both land in
+the Pages deploy. An agent downloads the CLI with `curl` and runs it with `node`; there is no API
+endpoint, because GitHub Pages serves static files only.
+
+`skills/claudeschemas/SKILL.md` is the agent skill that documents that workflow. It must validate
+clean against itself — no problems and no hints — as part of any change to it.
 
 ## Adding a new document kind
 
