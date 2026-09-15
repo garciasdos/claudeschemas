@@ -1,10 +1,12 @@
-import type { Diagnostic } from '../../core'
+import type { Diagnostic, DocumentTarget } from '../../core'
 import { createElement } from '../dom'
 import {
   countBySeverity,
   countLabel,
   groupDiagnostics,
   hintSectionTitle,
+  portabilitySectionTitle,
+  problemDiagnostics,
   problemSeverities,
 } from './summary'
 
@@ -34,7 +36,24 @@ const summaryOf = (problems: readonly Diagnostic[]): HTMLParagraphElement => {
   return summary
 }
 
-const rowOf = (diagnostic: Diagnostic, onSelect: DiagnosticSelectListener): HTMLLIElement => {
+const targetLabel = (id: string, targets: readonly DocumentTarget[]): string =>
+  targets.find((target) => target.id === id)?.label ?? id
+
+const targetTagOf = (
+  targetIds: readonly string[],
+  targets: readonly DocumentTarget[],
+): HTMLSpanElement =>
+  createElement(
+    'span',
+    'diagnostic-targets',
+    targetIds.map((id) => targetLabel(id, targets)).join(', '),
+  )
+
+const rowOf = (
+  diagnostic: Diagnostic,
+  targets: readonly DocumentTarget[],
+  onSelect: DiagnosticSelectListener,
+): HTMLLIElement => {
   const button = createElement('button', 'diagnostic')
   button.type = 'button'
   button.append(
@@ -48,6 +67,9 @@ const rowOf = (diagnostic: Diagnostic, onSelect: DiagnosticSelectListener): HTML
     createElement('span', 'diagnostic-message', diagnostic.message),
     createElement('span', 'diagnostic-rule', diagnostic.ruleId),
   )
+  if (diagnostic.portability !== undefined) {
+    button.append(targetTagOf(diagnostic.portability.targets, targets))
+  }
   button.addEventListener('click', () => {
     onSelect(diagnostic)
   })
@@ -60,23 +82,29 @@ const rowOf = (diagnostic: Diagnostic, onSelect: DiagnosticSelectListener): HTML
 const listOf = (
   diagnostics: readonly Diagnostic[],
   label: string,
+  targets: readonly DocumentTarget[],
   onSelect: DiagnosticSelectListener,
 ): HTMLUListElement => {
   const list = createElement('ul', 'diagnostic-list')
   list.setAttribute('aria-label', label)
   for (const diagnostic of diagnostics) {
-    list.append(rowOf(diagnostic, onSelect))
+    list.append(rowOf(diagnostic, targets, onSelect))
   }
   return list
 }
 
-const hintSectionOf = (
-  hints: readonly Diagnostic[],
+const sectionOf = (
+  title: string,
+  diagnostics: readonly Diagnostic[],
+  label: string,
+  targets: readonly DocumentTarget[],
   onSelect: DiagnosticSelectListener,
 ): HTMLElement => {
   const section = createElement('section', 'panel-section')
-  const title = createElement('h3', 'panel-section-title', hintSectionTitle(hints.length))
-  section.append(title, listOf(hints, 'Improvement hints', onSelect))
+  section.append(
+    createElement('h3', 'panel-section-title', title),
+    listOf(diagnostics, label, targets, onSelect),
+  )
   return section
 }
 
@@ -86,14 +114,34 @@ export class DiagnosticsPanel {
     private readonly onSelect: DiagnosticSelectListener,
   ) {}
 
-  render(diagnostics: readonly Diagnostic[]): void {
-    const { problems, hints } = groupDiagnostics(diagnostics)
+  render(diagnostics: readonly Diagnostic[], targets: readonly DocumentTarget[]): void {
+    const groups = groupDiagnostics(diagnostics)
+    const { problems, portability, hints } = groups
     const children: HTMLElement[] = [
-      summaryOf(problems),
-      listOf(problems, 'Problems', this.onSelect),
+      summaryOf(problemDiagnostics(groups)),
+      listOf(problems, 'Problems', targets, this.onSelect),
     ]
+    if (portability.length > 0) {
+      children.push(
+        sectionOf(
+          portabilitySectionTitle(portability.length),
+          portability,
+          'Portability problems',
+          targets,
+          this.onSelect,
+        ),
+      )
+    }
     if (hints.length > 0) {
-      children.push(hintSectionOf(hints, this.onSelect))
+      children.push(
+        sectionOf(
+          hintSectionTitle(hints.length),
+          hints,
+          'Improvement hints',
+          targets,
+          this.onSelect,
+        ),
+      )
     }
     this.container.replaceChildren(...children)
   }

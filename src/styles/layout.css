@@ -158,6 +158,10 @@
   .header-controls {
     gap: var(--space-3);
   }
+
+  .kind-select {
+    max-width: 28vw;
+  }
 }
 
 @media (max-width: 560px) {

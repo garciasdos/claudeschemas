@@ -45,6 +45,19 @@ describe('InlineCommandWithoutBashRule', () => {
     expect(rule.check(withFrontmatter('allowed-tools: Read, Edit', body))).toHaveLength(1)
   })
 
+  it('ignores an injection that only appears inside a fenced code block', () => {
+    const documented = 'Write it like this:\n\n```markdown\n!`git status --short`\n```\n'
+    expect(rule.check(withFrontmatter('name: demo', documented))).toEqual([])
+    expect(rule.check(withFrontmatter('name: demo', '~~~md\n!`git status`\n~~~\n'))).toEqual([])
+  })
+
+  it('still hints at an injection outside a fence that also appears inside one', () => {
+    const mixed = '!`git status --short`\n\n```markdown\n!`git status --short`\n```\n'
+    const diagnostics = rule.check(withFrontmatter('name: demo', mixed))
+    expect(diagnostics).toHaveLength(1)
+    expect(diagnostics[0]?.range.start.line).toBe(5)
+  })
+
   it('stays quiet without frontmatter', () => {
     expect(rule.check(parseDocument(body))).toEqual([])
   })

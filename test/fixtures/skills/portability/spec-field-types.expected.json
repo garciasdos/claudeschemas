@@ -1,0 +1,9 @@
+{
+  "problem": "A list-valued allowed-tools and a non-string metadata value, which the Agent Skills spec types reject",
+  "targets": {
+    "claude-code": [],
+    "skills-api": [],
+    "agent-skills-spec": ["portability/field-constraint"],
+    "all": ["portability/field-constraint"]
+  }
+}

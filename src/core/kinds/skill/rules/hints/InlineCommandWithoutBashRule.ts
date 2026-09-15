@@ -2,7 +2,7 @@ import type { Diagnostic, Severity } from '../../../../diagnostics/types'
 import type { ParsedDocument } from '../../../../document/types'
 import type { Rule } from '../../../../rules/types'
 import { SkillFrontmatter } from '../../SkillFrontmatter'
-import { findInBody } from '../bodyMatches'
+import { findOutsideFences } from '../bodyMatches'
 import { toolBaseName, toolEntries } from '../toolEntries'
 
 const inlineCommand = /(?<=^|\s)!`[^`\n]+`/gm
@@ -23,7 +23,7 @@ export class InlineCommandWithoutBashRule implements Rule {
     if (grantsShell) {
       return []
     }
-    const command = findInBody(document, inlineCommand)[0]
+    const command = findOutsideFences(document, inlineCommand)[0]
     if (command === undefined) {
       return []
     }

@@ -77,4 +77,24 @@ describe('SkillDocumentKind', () => {
     expect(diagnostics[0]?.ruleId).toBe('schema/type')
     expect(diagnostics[0]?.range.start).toEqual({ line: 1, column: 1 })
   })
+
+  it('offers Claude Code as the default of four targets', () => {
+    expect(kind.defaultTargetId).toBe('claude-code')
+    expect(kind.targets.map((target) => target.id)).toEqual([
+      'claude-code',
+      'skills-api',
+      'agent-skills-spec',
+      'all',
+    ])
+    expect(kind.targets[0]?.schemaUrl).toBe(kind.schemaUrl)
+  })
+
+  it('validates against the default target when none is named', () => {
+    const text = '---\nname: Demo\nargument-hint: [tag]\n---\n\nBody.\n'
+    expect(kind.validate(text)).toEqual(kind.validate(text, 'claude-code'))
+  })
+
+  it('has nothing to make portable for the Claude Code target', () => {
+    expect(kind.toPortable(kind.sample, 'claude-code')).toBeNull()
+  })
 })

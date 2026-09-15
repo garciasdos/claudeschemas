@@ -1,0 +1,9 @@
+{
+  "problem": "Argument placeholders and the argument frontmatter keys that carry them",
+  "targets": {
+    "claude-code": [],
+    "skills-api": ["portability/argument-placeholder", "portability/unsupported-field"],
+    "agent-skills-spec": ["portability/argument-placeholder", "portability/unsupported-field"],
+    "all": ["portability/argument-placeholder", "portability/unsupported-field"]
+  }
+}

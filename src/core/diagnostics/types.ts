@@ -10,10 +10,15 @@ export interface Range {
 
 export type Severity = 'error' | 'warning' | 'info' | 'hint'
 
+export interface PortabilityAttribution {
+  targets: readonly string[]
+}
+
 export interface Diagnostic {
   ruleId: string
   severity: Severity
   message: string
   range: Range
   source: 'schema' | 'frontmatter' | 'body'
+  portability?: PortabilityAttribution
 }

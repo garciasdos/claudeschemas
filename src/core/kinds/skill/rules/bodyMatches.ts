@@ -1,6 +1,7 @@
 import type { Range } from '../../../diagnostics/types'
 import type { ParsedDocument } from '../../../document/types'
 import { shiftRange } from '../../../document/positions'
+import { fencedRegions, isInsideFence } from './fencedRegions'
 
 export interface BodyMatch {
   value: RegExpExecArray
@@ -39,6 +40,19 @@ export const findInBody = (document: ParsedDocument, pattern: RegExp): BodyMatch
 
 export const findUnescapedInBody = (document: ParsedDocument, pattern: RegExp): BodyMatch[] =>
   findInBody(document, pattern).filter((match) => !isEscaped(document.body.text, match.value.index))
+
+export const findOutsideFences = (document: ParsedDocument, pattern: RegExp): BodyMatch[] => {
+  const regions = fencedRegions(document)
+  return findInBody(document, pattern).filter((match) => !isInsideFence(regions, match.value.index))
+}
+
+export const findUnescapedOutsideFences = (
+  document: ParsedDocument,
+  pattern: RegExp,
+): BodyMatch[] =>
+  findOutsideFences(document, pattern).filter(
+    (match) => !isEscaped(document.body.text, match.value.index),
+  )
 
 export const bodyLines = (document: ParsedDocument): string[] =>
   document.body.text.length === 0 ? [] : document.body.text.split('\n')

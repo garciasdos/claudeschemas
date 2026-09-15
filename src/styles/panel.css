@@ -138,3 +138,11 @@
   color: var(--text-muted);
   max-width: 48ch;
 }
+
+.diagnostic-targets {
+  grid-column: 3;
+  font-size: var(--text-small);
+  color: var(--text-faint);
+  line-height: var(--line-tight);
+  overflow-wrap: anywhere;
+}

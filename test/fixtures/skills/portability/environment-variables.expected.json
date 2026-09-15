@@ -1,0 +1,9 @@
+{
+  "problem": "A ${CLAUDE_SKILL_DIR} variable that only Claude Code substitutes",
+  "targets": {
+    "claude-code": [],
+    "skills-api": ["portability/environment-variable"],
+    "agent-skills-spec": ["portability/environment-variable"],
+    "all": ["portability/environment-variable"]
+  }
+}

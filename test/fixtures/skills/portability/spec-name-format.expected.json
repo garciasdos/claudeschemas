@@ -1,0 +1,9 @@
+{
+  "problem": "A name with two hyphens in a row, which the Agent Skills spec pattern forbids",
+  "targets": {
+    "claude-code": [],
+    "skills-api": [],
+    "agent-skills-spec": ["portability/field-constraint"],
+    "all": ["portability/field-constraint"]
+  }
+}

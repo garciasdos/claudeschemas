@@ -1,0 +1,9 @@
+{
+  "problem": "No name key, which Claude Code fills in from the directory and both spec targets require",
+  "targets": {
+    "claude-code": [],
+    "skills-api": ["portability/field-constraint"],
+    "agent-skills-spec": ["portability/field-constraint"],
+    "all": ["portability/field-constraint"]
+  }
+}

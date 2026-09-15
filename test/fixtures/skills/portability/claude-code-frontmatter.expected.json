@@ -1,0 +1,9 @@
+{
+  "problem": "Claude Code frontmatter keys that no other target accepts",
+  "targets": {
+    "claude-code": [],
+    "skills-api": ["portability/unsupported-field"],
+    "agent-skills-spec": ["portability/unsupported-field"],
+    "all": ["portability/unsupported-field"]
+  }
+}

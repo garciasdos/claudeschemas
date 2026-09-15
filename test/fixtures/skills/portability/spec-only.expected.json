@@ -1,0 +1,9 @@
+{
+  "problem": "A six-field skill that carries nothing Claude Code specific",
+  "targets": {
+    "claude-code": [],
+    "skills-api": [],
+    "agent-skills-spec": [],
+    "all": []
+  }
+}

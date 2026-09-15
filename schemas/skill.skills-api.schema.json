@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://garciasdos.github.io/claudeschemas/schemas/skill.skills-api.schema.json",
+  "title": "Agent Skill frontmatter accepted by claude.ai and the Skills API",
+  "description": "YAML frontmatter of a SKILL.md uploaded to claude.ai or through the Skills API. Only the six Agent Skills spec fields are accepted; any other key is rejected with an unexpected-key error. Put client-specific values under `metadata`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "description": "Skill name. At most 64 characters, lowercase letters, digits and hyphens only.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "description": {
+      "description": "What the skill does and when Claude should use it. Non-empty, at most 1024 characters.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "license": {
+      "description": "License covering the skill, such as a license name or the name of a bundled license file.",
+      "type": "string"
+    },
+    "compatibility": {
+      "description": "Environment requirements such as the intended product or system prerequisites. At most 500 characters.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "metadata": {
+      "description": "Free-form map for client-specific properties the Agent Skills spec does not define.",
+      "type": "object"
+    },
+    "allowed-tools": {
+      "description": "Tools pre-approved to run while the skill is active. Experimental: support varies between products.",
+      "allOf": [{ "$ref": "#/definitions/stringOrStringList" }]
+    }
+  },
+  "definitions": {
+    "stringOrStringList": {
+      "title": "string or list of strings",
+      "description": "A single string, or a YAML list of strings.",
+      "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+    }
+  }
+}

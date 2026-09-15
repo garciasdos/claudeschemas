@@ -1,0 +1,9 @@
+{
+  "problem": "Inline and fenced dynamic context injection that only Claude Code expands",
+  "targets": {
+    "claude-code": [],
+    "skills-api": ["portability/dynamic-context"],
+    "agent-skills-spec": ["portability/dynamic-context"],
+    "all": ["portability/dynamic-context"]
+  }
+}
