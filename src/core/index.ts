@@ -7,6 +7,7 @@ export type {
 } from './diagnostics/types'
 export type { Frontmatter, ParsedDocument, DocumentParser } from './document/types'
 export type { Rule } from './rules/types'
+export type { DiagnosticGroups, SeverityCounts } from './diagnostics/groupDiagnostics'
 export type {
   DocumentKind,
   DocumentKindRegistry,
@@ -22,6 +23,14 @@ export { MarkdownFrontmatterParser } from './document/MarkdownFrontmatterParser'
 export { FrontmatterKeyLocator } from './document/FrontmatterKeyLocator'
 export { createYamlSyntaxDiagnostic, yamlSyntaxRuleId } from './document/frontmatterDiagnostics'
 export { normalizeDiagnostics } from './diagnostics/normalizeDiagnostics'
+export {
+  groupDiagnostics,
+  problemDiagnostics,
+  countBySeverity,
+  isHint,
+  isPortabilityFinding,
+  problemSeverities,
+} from './diagnostics/groupDiagnostics'
 export { AjvSchemaValidator } from './schema/AjvSchemaValidator'
 export { createSchemaDiagnostics } from './schema/createSchemaDiagnostics'
 export { SkillDocumentKind } from './kinds/skill/SkillDocumentKind'

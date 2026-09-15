@@ -1,14 +1,12 @@
 import type { Diagnostic, DocumentTarget } from '../../core'
-import { createElement } from '../dom'
 import {
   countBySeverity,
-  countLabel,
   groupDiagnostics,
-  hintSectionTitle,
-  portabilitySectionTitle,
   problemDiagnostics,
   problemSeverities,
-} from './summary'
+} from '../../core'
+import { createElement } from '../dom'
+import { countLabel, hintSectionTitle, portabilitySectionTitle } from './summary'
 
 export type DiagnosticSelectListener = (diagnostic: Diagnostic) => void
 
